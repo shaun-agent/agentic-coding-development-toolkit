@@ -471,7 +471,7 @@ flowchart LR
         s13_hot_build_agent --> s13_hot_test_agent["Test Agent"]
         s13_hot_test_agent -->|fail| s13_hot_build_agent
         s13_hot_test_agent -->|pass| s13_hot_review_human(["Engineer Review"])
-        s13_hot_review_human -->|fail| s13_hot_build_agent
+        s13_hot_review_human -->|fail| s13_hot_fix_agent
     end
 
     subgraph s13_feature_group["Feature Sandbox"]
@@ -481,7 +481,7 @@ flowchart LR
         s13_feature_test_agent -->|pass| s13_feature_cicd_code{"CI/CD"}
         s13_feature_cicd_code -->|fail| s13_feature_build_agent
         s13_feature_cicd_code -->|pass| s13_feature_review_human(["Engineer Review"])
-        s13_feature_review_human -->|fail| s13_feature_build_agent
+        s13_feature_review_human -->|fail| s13_feature_plan_agent
     end
 
     subgraph s13_bug_group["Bug Sandbox"]
@@ -491,7 +491,7 @@ flowchart LR
         s13_bug_test_agent -->|pass| s13_bug_cicd_code{"CI/CD"}
         s13_bug_cicd_code -->|fail| s13_bug_build_agent
         s13_bug_cicd_code -->|pass| s13_bug_review_human(["Engineer Review"])
-        s13_bug_review_human -->|fail| s13_bug_build_agent
+        s13_bug_review_human -->|fail| s13_bug_plan_agent
     end
 
     subgraph s13_chore_group["Chore Sandbox"]
