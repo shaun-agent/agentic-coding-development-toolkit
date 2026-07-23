@@ -1,0 +1,19 @@
+{
+  "name": "video-language-learning",
+  "version": "1.0.0",
+  "description": "Generate bilingual subtitle videos with vocabulary cards for language learning. Supports landscape and Reel (9:16) formats.",
+  "private": true,
+  "scripts": {
+    "postinstall": "npx playwright install chromium",
+    "cards": "node gen_cards.js",
+    "hook": "node gen_hook.js"
+  },
+  "dependencies": {
+    "playwright": "1.52.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Andy Chen",
+  "license": "MIT"
+}

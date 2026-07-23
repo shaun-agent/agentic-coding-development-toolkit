@@ -1,0 +1,636 @@
+[00:00:00.000 --> 00:00:02.440] It's time for us to talk about loop engineering.
+[00:00:02.700 --> 00:00:04.280] I was hoping this would just blow over
+[00:00:04.280 --> 00:00:05.260] after a couple of weeks.
+[00:00:05.260 --> 00:00:08.580] I was hoping a cracked engineer would call this stupid phrase
+[00:00:08.580 --> 00:00:10.640] what it really is, but no one has.
+[00:00:11.180 --> 00:00:12.940] So I'll do it myself.
+[00:00:13.200 --> 00:00:14.300] Forget about loop engineering.
+[00:00:14.520 --> 00:00:18.080] It's the wrong way to think about building valuable software
+[00:00:18.080 --> 00:00:21.220] with agents at scale consistently.
+[00:00:21.600 --> 00:00:24.000] Loop engineering is a terrible rebrand
+[00:00:24.000 --> 00:00:26.740] of the software development life cycle.
+[00:00:26.860 --> 00:00:29.600] It's as unclear as it is hype-filled.
+[00:00:29.600 --> 00:00:34.600] In this video, we simplify loop engineering and call it what it really is.
+[00:00:34.760 --> 00:00:38.760] If you understand this concept properly, we're going to break down in this video,
+[00:00:38.980 --> 00:00:43.060] you'll accelerate far ahead of the AI industry.
+[00:00:43.420 --> 00:00:49.280] Clarity and simplicity of information gives you speed and performance in your work.
+[00:00:49.380 --> 00:00:54.200] It's much more valuable and helpful to think about building with agents
+[00:00:54.200 --> 00:00:59.820] as if you're building developer workflows inside your software factory.
+[00:01:00.140 --> 00:01:02.520] Your props go into your software factory.
+[00:01:02.760 --> 00:01:04.460] A specific workflow runs.
+[00:01:04.800 --> 00:01:08.560] Each workflow is a combination of code plus agents.
+[00:01:08.920 --> 00:01:11.140] And then your results come out.
+[00:01:11.480 --> 00:01:12.960] Forget about loop engineering.
+[00:01:13.200 --> 00:01:20.040] Focus your valuable engineering time and tokens on building AI developer workflows.
+[00:01:25.360 --> 00:01:32.020] So first off, who am I to go up against big ideas from AI engineers like Boris Cherney from Anthropic
+[00:01:32.020 --> 00:01:37.140] and Peter Steinberg now from OpenAI? If you already know who I am and the work I've done,
+[00:01:37.260 --> 00:01:43.220] or you don't care, skip to this timestamp. My name is Dan Eisler, aka IndieDevDan. I'm a
+[00:01:43.220 --> 00:01:48.260] software engineer with over 15 years of EXP. I started out building Adobe Flash games with
+[00:01:48.260 --> 00:01:53.360] ActionScript 2 and 3 with my brothers. I interned at Blizzard, and then I quickly moved into the
+[00:01:53.360 --> 00:01:59.180] finance and accounting space, programming in C Sharp, TypeScript, Python, God-awful React,
+[00:01:59.520 --> 00:02:05.260] and God bless Evan Yu for creating Vue. I was AI coding before anyone had a name for it with tools
+[00:02:05.260 --> 00:02:13.600] like Ader and classic models like GPT 3.5 Turbo, GPT-4, and Sonnet 3. Tools and models you've
+[00:02:13.600 --> 00:02:19.580] probably never heard of or used. I own the domain name agenticengineer.com where thousands of
+[00:02:19.580 --> 00:02:24.500] engineers you've heard of from companies you know have improved their agentic engineering
+[00:02:24.500 --> 00:02:30.080] thanks to information products i've built by hand but anyone can pick up a domain name and
+[00:02:30.080 --> 00:02:36.580] create a course though right sure i also have an irrefutable trail of code and content for engineers
+[00:02:36.580 --> 00:02:43.620] on github and this youtube channel every single week for years now you can see myself and engineers
+[00:02:43.620 --> 00:02:49.660] that follow this channel consistently ahead of the curve of the AI industry. I don't just farm
+[00:02:49.660 --> 00:02:56.100] news for views like every other tech content creator. On this channel, we think, plan, and build.
+[00:02:56.260 --> 00:03:01.660] Every few months, it's important for me to sit down and say this. I'm not a content creator.
+[00:03:01.660 --> 00:03:08.360] I'm a software engineer that does content creation on the side. Why? Because this technology is too
+[00:03:08.360 --> 00:03:14.600] valuable to fall into the hands of a lucky few. And yes, I sell courses and yes, I benefit from
+[00:03:14.600 --> 00:03:19.420] it. Big whoop. Don't do anything you're great at for free. Welcome to capitalism. Enough about me.
+[00:03:19.580 --> 00:03:24.360] I don't show up here every single Monday to gloat and talk about myself. I show up here to give
+[00:03:24.360 --> 00:03:29.580] engineers like you an advantage you can use to accelerate your career, your work, your business,
+[00:03:29.820 --> 00:03:37.600] your engineering in the age of AI. No hype. So forget about loop engineering and focus on this
+[00:03:37.600 --> 00:03:43.640] instead. There are now three actors of value creation for engineering work. The engineers
+[00:03:43.640 --> 00:03:50.620] like you and I, there are the agents, and there's the code. Knowing when and where to place each of
+[00:03:50.620 --> 00:03:54.580] these is the name of the game of agentic engineering. And you might be thinking,
+[00:03:54.760 --> 00:03:58.580] where is he going with this? How does this relate to loop engineering and developer workflows?
+[00:03:58.800 --> 00:04:02.140] Stick with me here. We're going to work up to it. If you master the fundamentals,
+[00:04:02.140 --> 00:04:08.660] you'll master the compositions. Everyone in their AI psychosis seems to forget code is fast,
+[00:04:08.940 --> 00:04:14.040] always runs the same way unless you tell it not to. And guess what? It costs nothing. There are
+[00:04:14.040 --> 00:04:19.760] no token costs associated with code, the thing that truly moves at light speed. There's a hidden
+[00:04:19.760 --> 00:04:25.960] cost to implementing every single one of these actors of value creation. Everyone's talking about
+[00:04:25.960 --> 00:04:31.880] agents. We're all well aware of the cost of engineers, but code is the unsung hero of all
+[00:04:31.880 --> 00:04:36.740] of this consistent value creation creates consistent business value and out of these three
+[00:04:36.740 --> 00:04:44.020] code is the most reliable by miles followed by engineers and then agents so let's start
+[00:04:44.020 --> 00:04:46.100] with the most basic developer workflow
+[00:04:50.300 --> 00:04:56.480] an engineer prompts an llm and the engineer reviews the result this is the simple foundation
+[00:04:56.480 --> 00:05:00.600] that makes up every single loop, every single workflow,
+[00:05:01.160 --> 00:05:03.700] every single piece of work moving forward.
+[00:05:03.920 --> 00:05:06.480] Now, of course, we're not just using the LLM anymore.
+[00:05:06.660 --> 00:05:09.460] In the central node, we have an agent.
+[00:05:09.700 --> 00:05:11.960] Insert your favorite agent, insert your favorite model.
+[00:05:12.120 --> 00:05:13.900] It doesn't matter anymore.
+[00:05:13.900 --> 00:05:15.480] It's about the workflow
+[00:05:15.480 --> 00:05:18.500] that you and I execute every single day.
+[00:05:18.720 --> 00:05:20.000] Great, let's scale it up.
+[00:05:20.100 --> 00:05:23.460] Now we have code agents and engineers
+[00:05:23.460 --> 00:05:25.080] all involved in the process.
+[00:05:25.080 --> 00:05:29.040] We're building up to more and more advanced developer workflows.
+[00:05:29.040 --> 00:05:31.400] You'll notice something really important here.
+[00:05:31.560 --> 00:05:32.620] We now have code.
+[00:05:32.740 --> 00:05:34.600] In this case, we're just running a linter.
+[00:05:34.800 --> 00:05:35.700] We have a condition.
+[00:05:36.040 --> 00:05:39.880] If the linter fails, the results go back into our build agent.
+[00:05:40.080 --> 00:05:42.000] If they're successful, it passes.
+[00:05:42.440 --> 00:05:48.080] This condition and this routing back to our build agent creates our first loop, hence
+[00:05:48.080 --> 00:05:49.720] the term loop engineering.
+[00:05:49.960 --> 00:05:51.820] But loop engineering is too simple.
+[00:05:51.820 --> 00:05:53.020] It's too inaccurate.
+[00:05:53.020 --> 00:05:55.020] and there's a lot more to this story.
+[00:05:55.220 --> 00:05:56.280] So what comes next?
+[00:05:56.420 --> 00:05:58.620] How can we continue to enhance our developer workflow
+[00:05:58.620 --> 00:05:59.700] to get better results?
+[00:05:59.740 --> 00:06:02.960] We can, of course, add more deterministic code.
+[00:06:03.100 --> 00:06:04.900] Now we have multiple pass-fill statements
+[00:06:04.900 --> 00:06:06.640] routing back into our build agent,
+[00:06:06.780 --> 00:06:09.200] your codex, your cloud code, your PyCoding agent,
+[00:06:09.500 --> 00:06:11.000] whatever your agent harness is.
+[00:06:11.120 --> 00:06:13.320] This is the foundation of what it means
+[00:06:13.320 --> 00:06:15.040] to build with agents now.
+[00:06:15.180 --> 00:06:17.220] You have three actors in this,
+[00:06:17.340 --> 00:06:20.180] engineers, agents, and raw code.
+[00:06:20.280 --> 00:06:22.620] You have to leverage them all in the right location,
+[00:06:22.620 --> 00:06:23.740] at the right time.
+[00:06:23.900 --> 00:06:25.340] Here we're adding a code formatter.
+[00:06:25.500 --> 00:06:26.820] It doesn't matter what language you're in,
+[00:06:27.080 --> 00:06:29.000] linting your code, formatting your code,
+[00:06:29.240 --> 00:06:30.240] type check your code,
+[00:06:30.260 --> 00:06:33.640] and then keep scaling up the validation loops
+[00:06:33.640 --> 00:06:36.160] to run back into your agents.
+[00:06:36.560 --> 00:06:38.520] Once again, you'll see here these conditions
+[00:06:38.520 --> 00:06:41.320] is what makes up what is called the loop.
+[00:06:41.400 --> 00:06:43.360] But there's a lot more going on here.
+[00:06:43.560 --> 00:06:45.160] This is really a workflow
+[00:06:45.160 --> 00:06:48.580] of how information travels within a system.
+[00:06:48.780 --> 00:06:50.120] Okay, keep scaling it up.
+[00:06:50.240 --> 00:06:50.960] What comes next?
+[00:06:51.500 --> 00:06:53.320] We can add more code.
+[00:06:53.540 --> 00:06:57.040] A very valuable piece of code here is testing your code.
+[00:06:57.200 --> 00:06:57.680] So test.
+[00:06:57.960 --> 00:06:59.540] Now we take all these results,
+[00:06:59.820 --> 00:07:02.600] feed it back into our build agent over and over and over
+[00:07:02.600 --> 00:07:05.000] until the results all pass.
+[00:07:05.120 --> 00:07:07.680] And that gives us our final engineering review.
+[00:07:07.800 --> 00:07:09.000] You'll notice a pattern here.
+[00:07:09.160 --> 00:07:11.840] You and I always show up at the ends.
+[00:07:12.020 --> 00:07:14.580] These are the two constraints of agentic engineering.
+[00:07:14.820 --> 00:07:16.580] Prompting, also known as planning,
+[00:07:17.000 --> 00:07:19.440] and reviewing, also known as validation.
+[00:07:19.440 --> 00:07:26.320] If you're agentic engineering at scale properly, you're showing up at the beginning and the end with a few exceptions.
+[00:07:26.600 --> 00:07:31.160] Your AI developer workflows start simple like this, but they should continue to grow.
+[00:07:31.540 --> 00:07:34.980] Real engineering work looks a lot more complex than this, right?
+[00:07:35.120 --> 00:07:35.820] What do we do next?
+[00:07:40.240 --> 00:07:47.980] We can scale all of our testing, all of our validation, all of our linting, all of our type checking into a single test agent.
+[00:07:47.980 --> 00:07:51.080] So now we're scaling our compute to scale our impact.
+[00:07:51.360 --> 00:07:53.880] We're adding compute to add confidence.
+[00:07:54.200 --> 00:07:56.760] Now you can imagine we've handed this test agent
+[00:07:56.760 --> 00:07:59.280] all the things we want to do to test.
+[00:07:59.400 --> 00:08:00.420] And if something goes wrong,
+[00:08:00.600 --> 00:08:02.580] we send the context back to the build agent.
+[00:08:02.720 --> 00:08:04.640] If it passes, the engineer reviews,
+[00:08:05.140 --> 00:08:07.400] and then we can ship the deliverable.
+[00:08:07.540 --> 00:08:08.360] We can ship the code.
+[00:08:08.520 --> 00:08:10.500] All right, so notice a couple themes working here.
+[00:08:10.620 --> 00:08:12.520] As you scale up your developer workflows,
+[00:08:12.520 --> 00:08:15.000] you add agents and you add code.
+[00:08:15.000 --> 00:08:21.840] But what you don't want to add is more engineering effort outside of building the system that builds the system.
+[00:08:22.020 --> 00:08:23.040] Let's keep scaling this up.
+[00:08:23.180 --> 00:08:25.380] Let's add planning to the workflow.
+[00:08:25.600 --> 00:08:27.520] You're very familiar with these ideas, right?
+[00:08:27.640 --> 00:08:29.060] We're building workflows.
+[00:08:29.400 --> 00:08:35.700] These are all steps that you and I, the engineer, used to take and used to execute ourself, right?
+[00:08:35.780 --> 00:08:36.820] We would plan work.
+[00:08:36.940 --> 00:08:37.940] We would build the work.
+[00:08:38.020 --> 00:08:39.080] We would test the work.
+[00:08:39.400 --> 00:08:44.740] We would then have another engineer review the work, and then we would finally ship it into production, all right?
+[00:08:44.740 --> 00:08:48.760] It's a developer workflow, and all we've done here is added AI to it.
+[00:08:48.860 --> 00:08:51.120] The loops is just one piece of it.
+[00:08:51.240 --> 00:08:54.840] You can call it loop engineering, but it's inaccurate, and it's not encapsulating the
+[00:08:54.840 --> 00:08:55.500] whole picture.
+[00:08:55.680 --> 00:08:58.600] If we have loop engineering, we need to have condition engineering, and then we need to
+[00:08:58.600 --> 00:09:02.740] have function engineering, and then we need to have a word plus engineering for every
+[00:09:02.740 --> 00:09:07.000] type of control flow inside of the software development lifecycle, which is going to go
+[00:09:07.000 --> 00:09:07.700] on forever.
+[00:09:08.000 --> 00:09:13.780] Okay, so a very popular pattern is to push each one of your agents into their own work
+[00:09:13.780 --> 00:09:14.060] tree.
+[00:09:14.060 --> 00:09:19.940] this creates isolation this creates parallelism this lets you do more work in parallel and there's
+[00:09:19.940 --> 00:09:24.520] a nice side effect here where the agents don't trip over each other so guess what we're going to do
+[00:09:24.520 --> 00:09:30.040] we're going to write another prompt and this time we're going to write a prompt into a piece of code
+[00:09:30.040 --> 00:09:35.560] that's going to build our work trees all right so here we have a deterministic piece of code that's
+[00:09:35.560 --> 00:09:40.660] going to kick off multiple work trees based on the prompt and then we're going to execute several
+[00:09:40.660 --> 00:09:48.380] different agents running in line. So we have once again scaled our compute to scale our impact. We
+[00:09:48.380 --> 00:09:56.400] have multiple work trees running our plan, build, test, review, merge, ship, pipeline, our developer
+[00:09:56.400 --> 00:10:03.500] workflow, the workflow you and I used to go through as engineers building by hand. Now we have AI,
+[00:10:03.860 --> 00:10:09.760] hence AI developer workflows. And this is really important to think through. This is where you
+[00:10:09.760 --> 00:10:14.820] should focus on your engineering time. How can I combine the three actors of value creation,
+[00:10:15.340 --> 00:10:23.200] engineers, agents, and code to create workflows that execute large amounts of work on my behalf,
+[00:10:23.340 --> 00:10:28.220] on behalf of my company, on behalf of your users and products? That's the name of the game. Okay,
+[00:10:28.480 --> 00:10:33.220] so great. We have work trees. Work trees are, like I like to say, a great place to start,
+[00:10:33.420 --> 00:10:37.660] not a great place to end. There are a lot of problems with work trees. We can do one better
+[00:10:37.660 --> 00:10:41.880] by giving our agents each their own sandbox, okay?
+[00:10:42.140 --> 00:10:43.740] So instead of spinning up work trees,
+[00:10:44.080 --> 00:10:47.800] we're now giving every single agent their own computer, right?
+[00:10:47.900 --> 00:10:49.900] Their own agent sandbox to operate.
+[00:10:50.040 --> 00:10:52.360] Because once you do this, you have full isolation.
+[00:10:52.560 --> 00:10:55.340] You yourself can jump into the sandbox
+[00:10:55.340 --> 00:10:57.380] to look at the work, look at the result,
+[00:10:57.560 --> 00:10:59.400] look at the webpage, look at the tests,
+[00:10:59.660 --> 00:11:01.880] look at the application, whatever you need to do,
+[00:11:01.980 --> 00:11:03.660] do your review, and then of course,
+[00:11:03.820 --> 00:11:06.880] once all the work comes back in, you merge and you ship.
+[00:11:06.880 --> 00:11:11.740] So once again, notice the three actors of value creation working together.
+[00:11:11.980 --> 00:11:20.000] And notice how your ability to create these AI developer workflows is your ability to scale your impact with agents.
+[00:11:20.000 --> 00:11:26.540] It's designing these AI developer workflows that is the most value-creative thing an engineer can do.
+[00:11:26.680 --> 00:11:30.040] Hence the term I like to say on the channel all the time.
+[00:11:30.180 --> 00:11:34.160] You want to be building the system that builds the system.
+[00:11:34.160 --> 00:11:46.940] Okay, as you can see here, you'll start to see similarities in these workflows with a lot of work you've seen, a lot of work that you've done, and hopefully work that you're building into your teams, your co-workers, your business, your tools themselves.
+[00:11:47.200 --> 00:11:49.740] Okay, we're just getting started, right?
+[00:11:50.400 --> 00:11:52.740] Real work gets more and more complex.
+[00:11:52.740 --> 00:11:56.320] And this is the art and science of agentic engineering.
+[00:11:56.340 --> 00:11:58.060] So let's keep scaling it.
+[00:12:02.340 --> 00:12:08.640] a very common thing to do as you continue to progress is to set up a kanban board some type
+[00:12:08.640 --> 00:12:13.880] of ticket system input comes from all over your organization right it comes from support it comes
+[00:12:13.880 --> 00:12:17.980] from product and it comes from engineers right so now things get interesting because now we have
+[00:12:17.980 --> 00:12:23.880] a new unit a new wrapper around our code right we have some type of ticketing system and so once
+[00:12:23.880 --> 00:12:28.420] again, like there's this really important delineation that I make inside of tactical
+[00:12:28.420 --> 00:12:35.040] agentic coding. And it is this idea of the agentic layer, the agents, the prompts, the skills,
+[00:12:35.400 --> 00:12:41.740] the system prompts that wrap your application are the thing to be focused on right now. Because when
+[00:12:41.740 --> 00:12:46.800] you put those together with your code, with your system, with your entire team and your organization,
+[00:12:46.800 --> 00:12:53.100] you are agentic engineering. Agentic engineering is not just about the agents, spoiler alert,
+[00:12:53.100 --> 00:13:01.180] It's about your team and most importantly, your users and putting together the most valuable stack of the actors of value creation.
+[00:13:01.360 --> 00:13:03.000] Okay, so Kanban board, right?
+[00:13:03.080 --> 00:13:03.880] Let's jump into this.
+[00:13:03.980 --> 00:13:04.700] What does this look like?
+[00:13:04.780 --> 00:13:10.200] Okay, so for most teams, your tickets are then analyzed by your engineer who actually knows what's going on.
+[00:13:10.340 --> 00:13:17.940] And they'll translate that into a mid to low level prompt that you'll then pass into another full workflow, another agent sandbox.
+[00:13:17.940 --> 00:13:27.600] But some advanced teams, if you're teaching your organization how to write prompts well enough, and as models become more capable, you can skip your engineer input prompt here, right?
+[00:13:27.680 --> 00:13:30.220] Because your engineer's job should be building the system.
+[00:13:30.220 --> 00:13:31.580] We act on the meta layer.
+[00:13:31.740 --> 00:13:35.020] We act on the layer that can compound across our organization, okay?
+[00:13:35.200 --> 00:13:40.660] So advanced teams can skip the engineering prompt if this step is done properly, all right?
+[00:13:40.800 --> 00:13:42.300] But so, you know, this is code, right?
+[00:13:42.360 --> 00:13:44.020] Kanban boards, it's just code.
+[00:13:44.120 --> 00:13:44.860] There are no agents there.
+[00:13:44.860 --> 00:13:49.700] Then we enter the meat of a workflow where we run code to move that ticket into planning.
+[00:13:49.960 --> 00:13:50.860] Guess what happens next?
+[00:13:51.000 --> 00:13:52.840] Our agents take over the pipeline.
+[00:13:53.020 --> 00:13:56.880] Well, the scout agent look for all the code, look for all the tickets, look for all the
+[00:13:56.880 --> 00:14:01.000] documentation, look for previous spec files, and then it'll hand that to a plan agent,
+[00:14:01.200 --> 00:14:01.420] right?
+[00:14:01.520 --> 00:14:05.100] So we're splitting up our searching and our planning between two agents here.
+[00:14:05.300 --> 00:14:07.700] Once again, scaling compute, scaling impact.
+[00:14:08.000 --> 00:14:09.980] And after that happens, you know, plan phase is complete.
+[00:14:09.980 --> 00:14:16.140] So we run code to update our ticket, to move context, to do some specific work inside of our sandbox.
+[00:14:16.420 --> 00:14:18.620] And then, of course, our build agent kicks off.
+[00:14:18.740 --> 00:14:20.440] And you know what happens from here.
+[00:14:20.560 --> 00:14:22.200] You've done it a million times yourself.
+[00:14:22.280 --> 00:14:26.940] And now with agents, your build agent moves it into testing after it's done.
+[00:14:27.080 --> 00:14:29.300] And then your test agent tests, right?
+[00:14:29.440 --> 00:14:35.960] This individual loop, which is just one part of the developer workflow, executes until the result passes.
+[00:14:36.000 --> 00:14:38.220] And then we're going to run our CI CD.
+[00:14:38.440 --> 00:14:39.440] And guess what can happen here?
+[00:14:39.440 --> 00:14:44.440] This can pass or it can fail and go right back to the build agent to resolve the issues.
+[00:14:44.660 --> 00:14:44.980] All right.
+[00:14:45.120 --> 00:14:46.620] And then we get outside the sandbox.
+[00:14:46.920 --> 00:14:48.100] Engineer reviews a code.
+[00:14:48.240 --> 00:14:49.460] You know what this looks like now.
+[00:14:49.660 --> 00:14:50.800] Fail, pass, ship.
+[00:14:51.080 --> 00:14:51.360] All right.
+[00:14:51.480 --> 00:14:55.420] So you can see this is much more than just prompt engineering.
+[00:14:55.640 --> 00:14:57.040] It's much more than context engineering.
+[00:14:57.220 --> 00:14:58.460] It's much more than harness engineering.
+[00:14:58.580 --> 00:14:59.640] It's much more than loop engineering.
+[00:14:59.840 --> 00:15:05.560] This is about how teams move as an organism with all the actors inside.
+[00:15:05.740 --> 00:15:06.140] Okay.
+[00:15:06.140 --> 00:15:09.200] And if you're a small solo dev shop, same deal.
+[00:15:09.340 --> 00:15:15.600] It's about how you and your agents work together with code to generate valuable results.
+[00:15:15.800 --> 00:15:16.760] But this isn't the end.
+[00:15:16.880 --> 00:15:19.100] The future of engineering is vast.
+[00:15:19.300 --> 00:15:20.560] Let's keep pushing this.
+[00:15:20.680 --> 00:15:21.540] What happens next?
+[00:15:21.660 --> 00:15:23.820] Let's imagine another scenario here.
+[00:15:23.980 --> 00:15:26.460] Imagine you have a support crisis.
+[00:15:26.640 --> 00:15:28.280] Production is down.
+[00:15:28.500 --> 00:15:30.380] Production has crashed.
+[00:15:30.380 --> 00:15:37.080] So what AI developer workflow do you have planned in your organization right now when production goes down?
+[00:15:37.240 --> 00:15:46.520] How are you leveraging engineers, agents, and code to resolve this issue and to stop your business from leaking cash as your production system is down?
+[00:15:46.680 --> 00:15:47.720] Let's walk through it, okay?
+[00:15:47.900 --> 00:15:49.900] Because we've thought through this, right?
+[00:15:50.040 --> 00:15:54.720] We've designed, we've architected the AI developer workflow to account for this situation.
+[00:15:54.880 --> 00:15:56.220] Support files a ticket.
+[00:15:56.380 --> 00:15:58.180] In our case here, this goes right to Slack.
+[00:15:58.180 --> 00:16:01.480] It goes right to Teams, goes right to your communication channel, and one of your cracked
+[00:16:01.480 --> 00:16:03.380] engineers picks this up immediately.
+[00:16:03.680 --> 00:16:04.200] What do they do?
+[00:16:04.360 --> 00:16:09.580] They prompt a scout agent that routes right into a hotfix agent.
+[00:16:09.700 --> 00:16:13.340] Your hotfix agent has a specialized set of mental memory.
+[00:16:13.480 --> 00:16:18.160] It's an agent expert that knows and is prioritized to get things fixed.
+[00:16:18.400 --> 00:16:19.900] It's not doing things the right way.
+[00:16:19.980 --> 00:16:21.200] It's not doing things the fancy way.
+[00:16:21.320 --> 00:16:22.400] It's not optimizing anything.
+[00:16:22.540 --> 00:16:25.040] It's getting the fix out ASAP and nothing else.
+[00:16:25.040 --> 00:16:29.900] This is a surgical hotfix agent, a custom agent that you have specialized, that you've
+[00:16:29.900 --> 00:16:31.500] templated your engineering into.
+[00:16:31.860 --> 00:16:32.980] Now, what happens here?
+[00:16:33.080 --> 00:16:33.820] Human in the loop.
+[00:16:33.920 --> 00:16:34.620] This is a hotfix.
+[00:16:34.700 --> 00:16:36.160] We need to know the solution is going to work.
+[00:16:36.220 --> 00:16:38.080] So you put in human effort, right?
+[00:16:38.160 --> 00:16:40.460] You use engineering effort to approve or reject.
+[00:16:40.740 --> 00:16:43.120] This creates a single loop, all right?
+[00:16:43.200 --> 00:16:45.020] If we approve, guess what happens?
+[00:16:45.140 --> 00:16:49.200] We're going to build up a bunch of sandboxes to run the solution in parallel.
+[00:16:49.340 --> 00:16:49.840] And guess what?
+[00:16:49.980 --> 00:16:52.040] We're using multiple sandboxes.
+[00:16:52.040 --> 00:16:55.300] I want the first fastest agent that has a solution to win.
+[00:16:55.540 --> 00:16:58.340] Okay, whatever your compute budget is, you'll scale this up, you scale this down.
+[00:16:58.500 --> 00:17:02.980] If you're in a production system that's complex, you might want three, five, 10 agents running
+[00:17:02.980 --> 00:17:05.280] and racing toward a solution in their own agent sandbox.
+[00:17:05.540 --> 00:17:06.020] You don't care.
+[00:17:06.120 --> 00:17:06.820] You have the compute.
+[00:17:07.100 --> 00:17:09.540] You've done the agentic engineering to scale your impact.
+[00:17:09.640 --> 00:17:10.580] And guess what happens here?
+[00:17:10.720 --> 00:17:11.920] You already know what happens.
+[00:17:12.020 --> 00:17:16.820] It runs its individual loop in their sandbox, and then it passes or fails.
+[00:17:16.900 --> 00:17:20.300] If it fails, it goes right back to your hotfix agent and to you to resolve.
+[00:17:20.300 --> 00:17:26.900] And of course, if it's all successful, you, the engineer, validate it and you get the hot fix shipped ASAP.
+[00:17:27.040 --> 00:17:29.020] Okay, a question for you and your organization.
+[00:17:29.260 --> 00:17:32.420] Do you have an agentic workflow for production crashes?
+[00:17:32.720 --> 00:17:42.100] Can you get that resolved in record time using the three actors of value creation in the age of agents, engineers, agents, and code?
+[00:17:42.340 --> 00:17:42.980] All three.
+[00:17:43.360 --> 00:17:46.260] Okay, this continues to scale and scale and scale.
+[00:17:46.440 --> 00:17:48.620] Let's push these workflows further.
+[00:17:48.620 --> 00:17:52.520] After some point, what you get is a structure like this.
+[00:17:57.220 --> 00:17:59.000] And this is what really starts turning
+[00:17:59.000 --> 00:18:01.420] into a software factory, okay?
+[00:18:01.600 --> 00:18:03.680] You'll see here, we have many different types
+[00:18:03.680 --> 00:18:06.860] of specialized agent sandbox workflows.
+[00:18:07.260 --> 00:18:08.100] Some are for chores.
+[00:18:08.420 --> 00:18:10.380] One is for a bug, one is for a feature,
+[00:18:10.680 --> 00:18:12.980] one is for this hot fix that we just walked through.
+[00:18:13.160 --> 00:18:14.860] And you get the idea here, right?
+[00:18:15.040 --> 00:18:18.100] Any specialized AI developer workflow you need
+[00:18:18.100 --> 00:18:23.160] can be built and routed to thanks to your routing system.
+[00:18:23.540 --> 00:18:27.620] Okay, this is the art and science of agentic engineering, right?
+[00:18:27.720 --> 00:18:29.240] This is all of it put together.
+[00:18:29.480 --> 00:18:32.000] The loops are just one small piece of this picture.
+[00:18:32.240 --> 00:18:33.400] I hope you can see that now.
+[00:18:33.540 --> 00:18:39.020] In all this is a great level of prompt context, harness engineering.
+[00:18:39.260 --> 00:18:41.300] There are a million ways to do this.
+[00:18:41.600 --> 00:18:46.220] There are a million different multi-agent orchestration patterns to build into this.
+[00:18:46.220 --> 00:18:53.280] The key here is this, is that you have the right combination at the right time to push
+[00:18:53.280 --> 00:18:58.660] engineering work through end to end with agents, with code, with engineers.
+[00:18:58.940 --> 00:18:59.220] Okay.
+[00:18:59.400 --> 00:19:00.460] I know I'm repeating myself.
+[00:19:00.680 --> 00:19:01.640] I'm doing it on purpose.
+[00:19:01.940 --> 00:19:07.840] Most success in any domain is about doing a few things and saying a few things and focusing
+[00:19:07.840 --> 00:19:10.860] on a few things over and over and over.
+[00:19:11.000 --> 00:19:13.580] Let's walk through a full software factory.
+[00:19:13.680 --> 00:19:15.760] You can imagine how this looks, right?
+[00:19:15.760 --> 00:19:18.100] Let's keep with a Kanban ticket example.
+[00:19:18.360 --> 00:19:19.680] Now, anyone can file a ticket.
+[00:19:19.820 --> 00:19:20.560] This is a feature.
+[00:19:20.700 --> 00:19:21.200] This is a bug.
+[00:19:21.320 --> 00:19:21.920] This is a chore.
+[00:19:22.180 --> 00:19:25.300] Advanced teams are gonna skip wasting engineering time
+[00:19:25.300 --> 00:19:27.200] transferring your Kanban ticket
+[00:19:27.200 --> 00:19:30.640] into a low-level or mid-level engineering breakdown
+[00:19:30.640 --> 00:19:31.580] of what needs to happen.
+[00:19:31.740 --> 00:19:32.980] Advanced teams are gonna go right
+[00:19:32.980 --> 00:19:34.480] to kicking off a software factory
+[00:19:34.480 --> 00:19:36.240] the moment your Kanban ticket lands.
+[00:19:36.440 --> 00:19:37.340] Once the factory starts,
+[00:19:37.500 --> 00:19:39.960] it's gonna mark that ticket in progress and move it.
+[00:19:40.080 --> 00:19:42.460] And now we have a factory router agent.
+[00:19:42.460 --> 00:19:44.860] This could just be a simple LLM call.
+[00:19:44.860 --> 00:19:47.080] This could be some deterministic code.
+[00:19:47.420 --> 00:19:50.040] The exact nodes are up to you to decide,
+[00:19:50.040 --> 00:19:51.320] but you get the idea here.
+[00:19:51.460 --> 00:19:53.040] I'm gonna throw a factory agent here
+[00:19:53.040 --> 00:19:54.300] to intake the results,
+[00:19:54.600 --> 00:19:55.960] do a quick look at the code base,
+[00:19:56.240 --> 00:19:58.420] understand what AI developer workflow
+[00:19:58.420 --> 00:20:00.340] we need to execute for this system.
+[00:20:00.520 --> 00:20:02.900] First though, we're gonna set up a sandbox.
+[00:20:03.020 --> 00:20:04.680] We're not limiting our agents anymore.
+[00:20:05.040 --> 00:20:07.660] We know that agents are going to continue to expand.
+[00:20:07.860 --> 00:20:09.900] This is what the CPU crunch is all about.
+[00:20:10.140 --> 00:20:12.100] CPUs are getting wiped off the board
+[00:20:12.100 --> 00:20:15.560] outside of scaling RL and other ML engineering related work,
+[00:20:15.700 --> 00:20:17.160] agent sandboxes are going to,
+[00:20:17.320 --> 00:20:18.200] I can guarantee you this,
+[00:20:18.320 --> 00:20:21.080] be the majority of computers out there in the world.
+[00:20:21.240 --> 00:20:23.180] You and I will be using fewer and fewer devices
+[00:20:23.180 --> 00:20:25.200] while our agents continue to scale up
+[00:20:25.200 --> 00:20:26.260] and use more sandboxes, okay?
+[00:20:26.380 --> 00:20:27.280] But set up the sandbox.
+[00:20:27.480 --> 00:20:29.660] After that, our agent has already decided
+[00:20:29.660 --> 00:20:32.520] what type of workflow we need to get the job done
+[00:20:32.520 --> 00:20:34.780] at the best price, at the best performance,
+[00:20:34.820 --> 00:20:36.060] and at the right speed.
+[00:20:36.220 --> 00:20:37.880] Because as you likely know,
+[00:20:38.080 --> 00:20:41.020] you're not gonna run your hotfix AI developer workflow
+[00:20:41.020 --> 00:20:42.920] or your feature developer workflow
+[00:20:42.920 --> 00:20:45.080] where you're scaling out your very best agents.
+[00:20:45.280 --> 00:20:47.240] Maybe your build agent is a workhorse model,
+[00:20:47.460 --> 00:20:48.900] but your planner and your scouters
+[00:20:48.900 --> 00:20:50.320] are gonna be a state-of-the-art model
+[00:20:50.320 --> 00:20:51.640] so nothing gets missed.
+[00:20:51.760 --> 00:20:53.280] Of course, there's a whole slew
+[00:20:53.280 --> 00:20:55.560] of multi-agent orchestration work that can happen here,
+[00:20:55.600 --> 00:20:57.200] but the whole point is you're not gonna deploy
+[00:20:57.200 --> 00:21:00.640] your heavy AI developer workflows for a chore, right?
+[00:21:00.760 --> 00:21:02.900] For your chore, throw a single agent at this
+[00:21:02.900 --> 00:21:05.800] with a workhorse model, maybe even a lightweight model,
+[00:21:06.020 --> 00:21:07.900] build it, run the Lint, run the CICD,
+[00:21:08.160 --> 00:21:09.620] engineer reviews it, and ship it out.
+[00:21:09.620 --> 00:21:19.660] We'll talk about ZTE in a second, but the best teams are going to start dropping off engineering review because they've built the best system possible they know is going to execute for them.
+[00:21:19.840 --> 00:21:24.060] But every single unique workflow is unique for a reason, right?
+[00:21:24.200 --> 00:21:30.120] There are multiple workflows you want to build out here, multiple AI developer workflows you should be building out, not just one.
+[00:21:30.260 --> 00:21:35.520] I'll give my recommendation some really, really great practices you can use when building these out in a moment here.
+[00:21:35.740 --> 00:21:37.960] But the general rule of thumb is just to start simple.
+[00:21:37.960 --> 00:21:43.080] Once you start scaling this up, what you're going to end up with is a software factory,
+[00:21:43.260 --> 00:21:47.040] a software factory that can operate your application as well.
+[00:21:47.040 --> 00:21:50.580] And if you're doing it right, better than you and your engineering team.
+[00:21:50.740 --> 00:21:56.480] This is why all your effort, all of your effort goes into this now, the agentic layer, right?
+[00:21:56.580 --> 00:22:00.520] This is the AL, the agentic layer, not the app layer.
+[00:22:00.720 --> 00:22:02.860] The app layer is for your agents.
+[00:22:03.020 --> 00:22:07.220] The best engineering teams never touch the product themselves, okay?
+[00:22:07.220 --> 00:22:09.120] I know this might be controversial.
+[00:22:09.460 --> 00:22:11.040] Some engineers are going to hate hearing this,
+[00:22:11.180 --> 00:22:13.860] but the best teams are doing meta work
+[00:22:13.860 --> 00:22:15.560] on the agentic layer.
+[00:22:15.720 --> 00:22:18.780] They're building the system that builds the system.
+[00:22:18.940 --> 00:22:20.240] That is the central thesis
+[00:22:20.240 --> 00:22:22.240] inside of tactical agentic coding.
+[00:22:22.800 --> 00:22:24.120] Thousands of engineers know that,
+[00:22:24.200 --> 00:22:26.740] and you're going to figure it out too sooner or later, okay?
+[00:22:26.900 --> 00:22:29.100] That doesn't mean you can't jump into the app to do work,
+[00:22:29.120 --> 00:22:33.040] but when you have a successful product scaled with users,
+[00:22:33.240 --> 00:22:35.240] the name of the game is this,
+[00:22:35.240 --> 00:22:42.100] building a software factory that operates everything better than you alone could, better than code alone
+[00:22:42.100 --> 00:22:47.920] could, and better than agents alone could, right? Three actors of value creation, agents, engineers,
+[00:22:48.360 --> 00:22:53.140] code. Where does that all lead us? It leads us to the simple conclusion that it's not a loop you're
+[00:22:53.140 --> 00:22:58.620] after. It's an AI developer workflow, okay? You might be listening to this and thinking, but you
+[00:22:58.620 --> 00:23:03.720] drew a million loops. Like, isn't this a loop? Fine. If you want to call it a loop, I don't really care.
+[00:23:03.720 --> 00:23:05.680] I think a loop is too constrained.
+[00:23:05.680 --> 00:23:07.960] If you're going to call it a loop, we're going to need if engineering.
+[00:23:08.220 --> 00:23:09.700] We're going to need throw engineering.
+[00:23:09.840 --> 00:23:11.300] We're going to need exception engineering, right?
+[00:23:11.380 --> 00:23:13.100] We're going to need to name all these things engineering.
+[00:23:13.340 --> 00:23:14.920] This is a developer workflow.
+[00:23:15.100 --> 00:23:16.860] This used to be what engineers did.
+[00:23:17.100 --> 00:23:20.360] Engineers used to decide if something was a chore, if something was a bug.
+[00:23:20.480 --> 00:23:21.540] We used to write the plan.
+[00:23:21.680 --> 00:23:24.140] We used to execute it, so on and so forth.
+[00:23:24.200 --> 00:23:27.100] But now we have a new tool, and that's all it is.
+[00:23:27.220 --> 00:23:28.080] It's a new tool.
+[00:23:28.240 --> 00:23:29.740] We have agents to work with.
+[00:23:30.100 --> 00:23:33.220] That gives us AI developer workflows.
+[00:23:33.220 --> 00:23:44.900] Okay, so at the highest levels of agentic engineering, you're building software factories that execute the right work and the right combination of engineers, agents, and code across your organization.
+[00:23:44.920 --> 00:23:53.000] Once you really start to scale it up, you're going to add your other teammates, right, your other team members from other cross-cutting concerns inside of your business.
+[00:23:53.000 --> 00:23:57.220] But at the core of it, the engineers are responsible for the code, okay?
+[00:23:57.220 --> 00:24:03.560] I think a lot of orgs are going to have a problem with this once they start scaling in and adding other team members, right?
+[00:24:03.640 --> 00:24:06.920] Especially ones that can't write clear tickets for the life of them.
+[00:24:07.080 --> 00:24:08.460] You've seen this a million times, right?
+[00:24:08.480 --> 00:24:17.260] It's the most painful thing when your product manager, your CTO, your tech lead just writes a shit ticket and you have to translate it, right?
+[00:24:17.400 --> 00:24:21.660] So there's a lot of people, organizational level work to be done here.
+[00:24:21.660 --> 00:24:29.540] But you, at the end of the day, you the engineer, plus the agents, plus the code, making up the AI developer workflow, this is what it's all about.
+[00:24:29.800 --> 00:24:35.580] This is where value is going to be created at absurd levels, at absurd scales.
+[00:24:35.580 --> 00:24:40.280] Because once you get this right, here's the dirty secret of all software, right?
+[00:24:40.320 --> 00:24:41.000] You already know it.
+[00:24:41.180 --> 00:24:44.600] Once you get this right, you set up the right guardrails, the right harness, right?
+[00:24:44.760 --> 00:24:47.620] Again, prompt context, harness engineering, all of it.
+[00:24:47.620 --> 00:25:04.040] Once you do this right, you have a repeatable workflow that you can run tens, hundreds, and thousands of times delivering consistent results to you over and over and over again if you template your engineering into the fabric of your AI developer workflows.
+[00:25:04.040 --> 00:25:07.600] Okay. And so I've been pushing against out-of-the-box agents for a long time.
+[00:25:08.240 --> 00:25:10.640] You know, specialization is the name of the game.
+[00:25:10.880 --> 00:25:12.660] What is a product? What is a company?
+[00:25:12.820 --> 00:25:24.320] Right. Unless you're a big tech giant, like a product in a company is a set of people and technology that solve a specific problem for a specific avatar, for a specific user, for a specific customer.
+[00:25:24.460 --> 00:25:27.480] By very definition is specialization, right?
+[00:25:27.480 --> 00:25:32.120] Your expertise is the most valuable thing you have now.
+[00:25:32.300 --> 00:25:34.140] And you can template that into your engineering.
+[00:25:34.360 --> 00:25:37.620] You can template that into your AI developer workflows.
+[00:25:37.780 --> 00:25:41.660] This is the greatest leverage point of Agentec coding.
+[00:25:41.860 --> 00:25:44.240] It's building out these full AI developer workflows
+[00:25:44.240 --> 00:25:45.860] that puts it all together.
+[00:25:46.260 --> 00:25:51.140] And so once again, we are pushing away from Vibe coding.
+[00:25:51.340 --> 00:25:52.460] This is not Vibe coding.
+[00:25:52.600 --> 00:25:54.880] Vibe coding is not knowing how the system works
+[00:25:54.880 --> 00:25:57.180] and it's not looking at how the system works.
+[00:25:57.180 --> 00:26:02.520] Okay, agentic engineering is knowing your system works so well, you don't have to look.
+[00:26:02.640 --> 00:26:07.060] And that is because you, the engineer, have moved up a layer, you're meta engineering,
+[00:26:07.380 --> 00:26:12.760] you're compounding an advantage by optimizing the three actors of agentic engineering,
+[00:26:13.180 --> 00:26:17.720] engineer, code, agents, into the right developer workflow at the right time,
+[00:26:17.820 --> 00:26:20.720] at the right performance, at the right price, with the right speed.
+[00:26:20.940 --> 00:26:24.720] And after time, you'll realize something really important is that
+[00:26:24.720 --> 00:26:29.920] you'll be building a developer workflows into your products for your customers right with your
+[00:26:29.920 --> 00:26:35.620] customers as nodes and then as mentioned with your companies every user that can prompt into
+[00:26:35.620 --> 00:26:39.940] the system and receive results out the system right you have to design this system it's just
+[00:26:39.940 --> 00:26:49.620] another system so I've written hundreds and probably thousands of these AI developer workflows
+[00:26:49.620 --> 00:26:53.840] by now so let me give you the oil of everything I've learned so far with what I've seen and what
+[00:26:53.840 --> 00:26:59.800] I've recommended to engineers as they're building out their ADWs. First off, keep it simple. When
+[00:26:59.800 --> 00:27:04.040] you start building these out, start with the simplest workflow you can think of, right?
+[00:27:04.440 --> 00:27:07.940] And typically that looks something like this, right? After you get an agent running, you prompt
+[00:27:07.940 --> 00:27:12.180] back and forth and you're babysitting your agent. Everyone knows what this looks like. Just let it
+[00:27:12.180 --> 00:27:16.920] lint your code. You know, to be clear, so that you can really feel this, separate this out. I'm not
+[00:27:16.920 --> 00:27:21.440] saying write a skill, have your agent build, and then at the bottom of the skill, run lint.
+[00:27:21.440 --> 00:27:28.160] separate this out. Use an agent SDK, run a build agent, do work, and then run a linter. And when
+[00:27:28.160 --> 00:27:32.380] the linter fails, pass that back into the build agent with the same session ID. You have to
+[00:27:32.380 --> 00:27:37.360] separate your code and your agents. Otherwise, you just have an agent calling code. That's not
+[00:27:37.360 --> 00:27:42.160] what we want. We want separation of concerns all the way through. If that doesn't make sense to
+[00:27:42.160 --> 00:27:46.800] you right now, don't worry. It'll make sense once you start building it. This is not a big skill
+[00:27:46.800 --> 00:27:49.440] where you run 100 different nodes of workflows,
+[00:27:49.740 --> 00:27:51.520] there are massive testing,
+[00:27:51.800 --> 00:27:54.420] massive validation problems with doing that.
+[00:27:54.580 --> 00:27:55.560] And then what do you do after that?
+[00:27:55.720 --> 00:27:57.180] You add a couple nodes, right?
+[00:27:57.280 --> 00:27:59.100] Start solving real problems.
+[00:27:59.400 --> 00:28:01.240] Run your type checker, run your linter.
+[00:28:01.540 --> 00:28:03.840] If things go wrong, funnel it back into your build agent.
+[00:28:04.180 --> 00:28:06.340] What you'll notice here is that you're starting to build
+[00:28:06.340 --> 00:28:10.760] a larger unit, a larger system that operates without you.
+[00:28:10.900 --> 00:28:12.660] You show back the beginning and the end,
+[00:28:12.840 --> 00:28:14.240] the two constraints of agenda coding,
+[00:28:14.400 --> 00:28:15.040] planning and reviewing,
+[00:28:15.040 --> 00:28:17.680] and your system does everything else, okay?
+[00:28:17.880 --> 00:28:19.400] And then once you get to a certain point,
+[00:28:19.540 --> 00:28:21.060] you'll start separating out your agents.
+[00:28:21.120 --> 00:28:23.300] You'll start specializing your agents.
+[00:28:23.500 --> 00:28:25.500] Maybe you wanna separate your front end and your back end.
+[00:28:25.660 --> 00:28:27.540] Maybe you want building and testing.
+[00:28:27.780 --> 00:28:30.360] Again, the key here is just that you separate
+[00:28:30.360 --> 00:28:32.920] the context out so that your context can move
+[00:28:32.920 --> 00:28:35.520] between individual agents and code.
+[00:28:35.640 --> 00:28:37.360] When you're starting, remember KISS.
+[00:28:37.620 --> 00:28:38.740] Keep it simple, stupid.
+[00:28:38.940 --> 00:28:42.680] You can absolutely start with pure skill-based workflows
+[00:28:42.680 --> 00:28:45.800] where it's all one skill outside of the prompt in the review.
+[00:28:46.000 --> 00:28:47.540] But as soon as you start productionizing,
+[00:28:47.700 --> 00:28:49.940] as soon as you want to get serious about your ADWs,
+[00:28:50.000 --> 00:28:52.520] you must separate code out of the skills
+[00:28:52.520 --> 00:28:55.020] because that's still your agent running it, right?
+[00:28:55.140 --> 00:28:57.420] You have to be super, super clear about those steps
+[00:28:57.420 --> 00:28:59.300] so that you can set up the proper guardrails
+[00:28:59.300 --> 00:29:02.400] and information flows in your AI developer workflows.
+[00:29:02.680 --> 00:29:04.680] My next really big piece of advice here is
+[00:29:04.680 --> 00:29:08.500] design your ADWs by doing the work yourself first.
+[00:29:08.680 --> 00:29:11.220] For a lot of engineers, this will sound insanely painful,
+[00:29:11.220 --> 00:29:14.400] but you can like, you know, use your agent in the terminal,
+[00:29:14.740 --> 00:29:16.900] run the build workflow, do the testing, right?
+[00:29:16.940 --> 00:29:17.960] You can still use your agent for that.
+[00:29:18.040 --> 00:29:19.200] I'm not saying do it by hand.
+[00:29:19.280 --> 00:29:20.460] That would be a waste of time now.
+[00:29:20.580 --> 00:29:22.900] But what I am saying is whatever workflow you're setting up,
+[00:29:23.200 --> 00:29:26.660] run it end to end, step into each node yourself,
+[00:29:26.980 --> 00:29:28.680] run the paths, run the condition,
+[00:29:29.120 --> 00:29:30.660] watch the functions get executed,
+[00:29:31.000 --> 00:29:33.120] do the review and then do the ship to production
+[00:29:33.120 --> 00:29:35.500] and then start writing this all
+[00:29:35.500 --> 00:29:38.600] as a combination of agents, engineers and code.
+[00:29:38.760 --> 00:29:40.920] And I recommend you take something like Mermaid
+[00:29:40.920 --> 00:29:44.880] And by the way, this is like a adaptation of Mermaid Diagram.
+[00:29:45.160 --> 00:29:47.860] I had an agent create using a plan build test.
+[00:29:48.060 --> 00:29:49.860] I had to develop a workflow in one shot.
+[00:29:50.020 --> 00:29:51.920] I created a animated application,
+[00:29:52.120 --> 00:29:54.920] which is of course based on a Mermaid Diagram.
+[00:29:55.080 --> 00:29:57.240] Okay, so shout out to Mermaid, shout out to mermaid.live.
+[00:29:57.400 --> 00:29:58.880] But that's my second piece of advice, right?
+[00:29:59.100 --> 00:30:01.140] Walk through it all yourself first.
+[00:30:01.320 --> 00:30:03.160] Sit down with pencil and a piece of paper
+[00:30:03.160 --> 00:30:05.100] or use Mermaid or use whatever.
+[00:30:05.380 --> 00:30:08.080] Really sit down and like write out your workflow.
+[00:30:08.080 --> 00:30:11.840] And then lastly, make sure you're not just using agents, right?
+[00:30:11.940 --> 00:30:13.280] Use agents and code.
+[00:30:13.440 --> 00:30:16.780] As I mentioned, you can always start with agents and skills.
+[00:30:16.800 --> 00:30:20.640] But as soon as you start hitting production, as soon as you want to get serious, move some
+[00:30:20.640 --> 00:30:22.280] of that skill work into code.
+[00:30:22.400 --> 00:30:23.880] This is not just about token costs.
+[00:30:23.960 --> 00:30:26.220] This is about performance, reliability, and speed.
+[00:30:26.440 --> 00:30:31.960] Again, everyone in their AI psychosis has forgotten that speed costs zero tokens.
+[00:30:32.160 --> 00:30:33.560] There's no hallucination.
+[00:30:33.720 --> 00:30:35.660] It does the exact same thing every time.
+[00:30:35.660 --> 00:30:38.320] and it literally runs at the speed of light.
+[00:30:38.520 --> 00:30:41.160] So don't over leverage on agents, okay?
+[00:30:41.340 --> 00:30:44.220] Balance it out with actual code, right?
+[00:30:44.340 --> 00:30:45.060] Code execution.
+[00:30:45.300 --> 00:30:47.000] And yes, there's information orchestration.
+[00:30:47.160 --> 00:30:49.520] There is, this is what context engineering is.
+[00:30:49.800 --> 00:30:52.480] You're gonna need a place for all the results
+[00:30:52.480 --> 00:30:54.060] in between each step.
+[00:30:54.280 --> 00:30:55.580] Yes, it's gonna take some time.
+[00:30:55.700 --> 00:30:56.560] Yes, it's gonna be a little annoying.
+[00:30:56.760 --> 00:30:58.360] Yes, during the process, you'll wonder,
+[00:30:58.580 --> 00:30:59.920] I should just throw this all in the skill.
+[00:31:00.220 --> 00:31:01.660] You'll be wrong down the road.
+[00:31:01.700 --> 00:31:02.580] I can guarantee you that.
+[00:31:02.740 --> 00:31:03.440] I've been there.
+[00:31:03.620 --> 00:31:04.840] Don't waste your time doing shit.
+[00:31:04.840 --> 00:31:06.520] other engineers have already done wrong.
+[00:31:06.840 --> 00:31:08.960] Separate it out as you scale this, okay?
+[00:31:09.100 --> 00:31:10.180] So that's the big third tip.
+[00:31:10.360 --> 00:31:12.720] Use agents and code, okay?
+[00:31:12.860 --> 00:31:15.640] Because agents plus code beats either alone,
+[00:31:15.660 --> 00:31:18.120] especially when you start really scaling these
+[00:31:18.120 --> 00:31:21.220] into legitimately large AI developer workflows
+[00:31:21.220 --> 00:31:24.360] that do serious work for you and your organization.
+[00:31:24.360 --> 00:31:24.860] Why?
+[00:31:25.040 --> 00:31:27.020] Because you're gonna need to test this node.
+[00:31:27.180 --> 00:31:29.400] You're gonna need to test plan and to build.
+[00:31:29.600 --> 00:31:31.200] You're gonna need to test plan and to build
+[00:31:31.200 --> 00:31:33.540] and to update the status and to testing and to fail.
+[00:31:33.540 --> 00:31:37.580] This is all still a system you, the engineer, are responsible for.
+[00:31:37.780 --> 00:31:44.180] So keep using great classic engineering patterns, isolatable, decoupled, single interface, right?
+[00:31:44.320 --> 00:31:47.860] All that stuff matters probably even more, right?
+[00:31:48.000 --> 00:31:52.200] It matters even more now because once you do it right and you set up your AI developer workflow,
+[00:31:52.500 --> 00:31:58.580] it gets multiplied hundreds and thousands of times and your agents plus your code can drive the outcomes for you.
+[00:31:58.580 --> 00:32:10.120] Okay, so, you know, let's step away from the vibes a little bit and let's step away from the AI psychosis a little bit because if we're going to do serious agentic engineering, you need to know what's going to happen in your system.
+[00:32:10.180 --> 00:32:13.400] So if you made it to the end here, I want to just say thank you for trusting me.
+[00:32:13.500 --> 00:32:17.380] For everyone that's been with the channel for a while, for years now, you know, big shout out to you.
+[00:32:17.480 --> 00:32:21.940] I appreciate you trusting me and following along this massive journey of agentic engineering that we're on.
+[00:32:21.940 --> 00:32:27.720] If you want more, I recommend you check out agenticengineer.com, specifically tactical
+[00:32:27.720 --> 00:32:28.780] agentic coding.
+[00:32:29.020 --> 00:32:32.300] As I mentioned, I've been pretty early to a lot of these ideas.
+[00:32:32.600 --> 00:32:36.800] In tactical agentic coding, you're going to hear a lot of what I just said really broken
+[00:32:36.800 --> 00:32:43.020] down step by step across eight lessons and then six additional upgradable lessons if you're
+[00:32:43.020 --> 00:32:43.540] interested.
+[00:32:43.800 --> 00:32:44.120] Okay.
+[00:32:44.300 --> 00:32:46.480] So the big idea here is AI developer workflows.
+[00:32:46.560 --> 00:32:48.860] It's building systems that build systems.
+[00:32:48.860 --> 00:32:51.100] We're not touching the application layer anymore.
+[00:32:51.100 --> 00:32:56.340] We're touching the agentic system, the agentic layer that builds it on our behalf.
+[00:32:56.480 --> 00:32:56.700] Okay.
+[00:32:57.100 --> 00:32:59.700] So if you want to pay to play, you want to get a big advantage that again,
+[00:33:00.000 --> 00:33:03.720] thousands of engineers that you know of and have heard of at companies,
+[00:33:03.960 --> 00:33:07.320] you know the names of, they are in here and they have gotten the advantage
+[00:33:07.320 --> 00:33:08.920] and they are getting the advantage, right?
+[00:33:09.060 --> 00:33:12.720] It's tactical agentic coding is the first eight lessons you can upgrade to agentic horizon
+[00:33:12.720 --> 00:33:14.520] to get some upgradable ideas.
+[00:33:14.660 --> 00:33:17.360] Really big idea there is of course multi-agent orchestration,
+[00:33:17.360 --> 00:33:21.440] but agent experts is turning out to be a massively banger idea,
+[00:33:21.740 --> 00:33:25.140] a massively important idea for engineering in the age of agents.
+[00:33:25.140 --> 00:33:28.420] If you want to build true specialists that outperform out of the box agent.
+[00:33:28.760 --> 00:33:30.300] Anyway, lots more in there.
+[00:33:30.460 --> 00:33:34.100] There's a very clear 30-day refund before you start lesson four.
+[00:33:34.300 --> 00:33:37.880] So if you don't like my style or you're not getting the core of it, it's fine.
+[00:33:38.000 --> 00:33:41.540] I don't want you in here if you don't want to be 30-day refund before you start lesson four.
+[00:33:41.720 --> 00:33:43.180] This is going to be linked in the description for you.
+[00:33:43.380 --> 00:33:47.160] Also, I recommend if you vibe with the ideas here, if you understand the ideas,
+[00:33:47.360 --> 00:33:50.240] and you don't want to jump in the tactical agentic coding right away,
+[00:33:50.680 --> 00:33:51.420] check out this blog.
+[00:33:51.560 --> 00:33:53.120] I'll link in the description as well.
+[00:33:53.340 --> 00:33:54.200] Thinking in threads.
+[00:33:54.200 --> 00:33:56.980] It covers a lot of the same ideas we've been discussing.
+[00:33:57.320 --> 00:33:59.720] 99% of everything I do here on the channel.
+[00:33:59.720 --> 00:34:00.440] It's all free.
+[00:34:00.620 --> 00:34:04.420] It's out there for you to understand and master agentic engineering.
+[00:34:04.620 --> 00:34:06.220] If you made it to the end, do me a favor.
+[00:34:06.380 --> 00:34:07.260] Like this video.
+[00:34:07.460 --> 00:34:09.440] Leave a comment and share it with your coworker
+[00:34:09.440 --> 00:34:11.920] before your competition sends it to theirs.
+[00:34:12.320 --> 00:34:14.300] You know where to find me every single Monday.
+[00:34:14.720 --> 00:34:16.900] Stay focused and keep building.
+[00:34:17.680 --> 00:34:17.740] Thank you.
