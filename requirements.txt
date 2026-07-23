@@ -1,7 +1,0 @@
-# Python 3.9+ required (uses stdlib only)
-# System dependencies (install via your package manager):
-#   - ffmpeg (with libass support for subtitle burning)
-#   - ffprobe (comes with ffmpeg)
-#
-# Optional (for transcription):
-#   - mlx-whisper (pip install mlx-whisper) — Apple Silicon only
